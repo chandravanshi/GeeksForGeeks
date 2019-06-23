@@ -14,7 +14,7 @@ public class CSVReader {
     System.out.println("Enter file path");
     Path pathToFile = Paths.get("/Users/naveenkumarchandravanshi/Downloads/FIS_DUMP.xlsx");
     try (BufferedReader br = Files.newBufferedReader(pathToFile,
-        StandardCharsets.US_ASCII)) {
+        StandardCharsets.UTF_8)) {
 
       // read the first line from the text file
       String line = br.readLine();
