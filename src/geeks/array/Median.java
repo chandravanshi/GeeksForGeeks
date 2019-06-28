@@ -13,7 +13,7 @@ public class Median {
   }
 
   private static void findMedian() throws IOException {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    BufferedReader  reader = new BufferedReader(new InputStreamReader(System.in));
     int total = 0;
     int first = Integer.parseInt(reader.readLine());
     Node medianNode = new Node(first);
@@ -34,28 +34,38 @@ public class Median {
   private static Node insert(Node medianNode, int input, int total) {
     if(input < medianNode.value) {
       Node node = medianNode;
-      Node previousNode = node.previous;
-      while(node != null && node.value > input) {
+      while(node.value > input && node.previous != null) {
         node = node.previous;
       }
       Node newNode = new Node(input);
-      newNode.next = node.next;
-      node.next = newNode;
-      newNode.previous = node;
+      if(node.previous == null && node.value > input) {
+        newNode.next = node;
+        node.previous = newNode;
+      } else {
+        newNode.next = node.next;
+        newNode.previous = node;
+        node.next = newNode;
+        newNode.next.previous = newNode;
+      }
       if(total % 2 == 0) {
         return medianNode;
-      } else {
-        return medianNode.previous;
       }
+      return medianNode.previous;
     } else {
       Node node = medianNode;
-      while(node.next.value < input && node.next != null) {
+      while(node.value < input && node.next != null) {
         node = node.next;
       }
       Node newNode = new Node(input);
-      newNode.previous = node;
-      newNode.next = node.next;
-      node.next = newNode;
+      if(node.next == null && node.value < input) {
+        newNode.previous = node;
+        node.next = newNode;
+      } else {
+        newNode.next = node;
+        newNode.previous = node.previous;
+        node.previous = newNode;
+        newNode.previous.next = newNode;
+      }
 
       if(total % 2 == 0) {
         return medianNode.next;
@@ -63,6 +73,7 @@ public class Median {
         return medianNode;
       }
     }
+
   }
 
 }
