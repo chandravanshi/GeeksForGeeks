@@ -47,13 +47,13 @@ public class Traversal {
 
   }
 
-  private static void inorder(Node node) {
+  private static void inorder(Node node, int n) {
     if(node == null) {
       return;
     }
-    inorder(node.left);
+    inorder(node.left, n);
     System.out.print(node.value + " ");
-    inorder(node.right);
+    inorder(node.right, n+1);
   }
 
   private static void preorder(Node node) {
